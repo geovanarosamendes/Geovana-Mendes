@@ -2,23 +2,58 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { FaMoon, FaSun } from "react-icons/fa";
 
 const menuItems = [
-  { label: "Início", href: "/" },
-  { label: "Projetos", href: "/projetos" },
+  { label: "Home", href: "/" },
+  { label: "Projects", href: "/projetos" },
   { label: "Blog", href: "/blog" },
-  { label: "Sobre", href: "/sobre" },
-  { label: "Contato", href: "/contato" },
-  { label: "Capacitações", href: "/capacitacoes",},
+  { label: "Training", href: "/capacitacoes" },
+  { label: "About", href: "/sobre" },
+  { label: "Contact", href: "/contato" },
 ];
 
 export default function Header() {
   const pathname = usePathname();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [language, setLanguage] = useState<"en-US" | "pt-BR">("en-US");
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") as "dark" | "light" | null;
+    const savedLanguage = localStorage.getItem("language") as
+      | "en-US"
+      | "pt-BR"
+      | null;
+
+    const initialTheme = savedTheme || "dark";
+    const initialLanguage = savedLanguage || "en-US";
+
+    setTheme(initialTheme);
+    setLanguage(initialLanguage);
+
+    document.documentElement.setAttribute("data-theme", initialTheme);
+    document.documentElement.lang = initialLanguage;
+  }, []);
 
   function isActiveLink(href: string) {
     return href === "/" ? pathname === "/" : pathname.startsWith(href);
+  }
+
+  function toggleTheme() {
+    const newTheme = theme === "dark" ? "light" : "dark";
+
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+  }
+
+  function changeLanguage(value: "en-US" | "pt-BR") {
+    setLanguage(value);
+    localStorage.setItem("language", value);
+    document.documentElement.lang = value;
   }
 
   return (
@@ -41,9 +76,27 @@ export default function Header() {
           ))}
         </nav>
 
-        <Link href="/contato" className="btn btn-primary header-cta">
-          Vamos Conversar
-        </Link>
+        <div className="header-actions">
+          <select
+            className="language-select"
+            value={language}
+            onChange={(event) =>
+              changeLanguage(event.target.value as "en-US" | "pt-BR")
+            }
+          >
+            <option value="en-US">🇺🇸 EN</option>
+            <option value="pt-BR">🇧🇷 PT-BR</option>
+          </select>
+
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={toggleTheme}
+            aria-label="Alterar tema"
+          >
+            {theme === "dark" ? <FaSun /> : <FaMoon />}
+          </button>
+        </div>
 
         <button
           type="button"
@@ -72,6 +125,27 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
+
+            <div className="mobile-header-actions">
+              <select
+                className="language-select"
+                value={language}
+                onChange={(event) =>
+                  changeLanguage(event.target.value as "en-US" | "pt-BR")
+                }
+              >
+                <option value="en-US">🇺🇸 EN</option>
+                <option value="pt-BR">🇧🇷 PT-BR</option>
+              </select>
+
+              <button
+                type="button"
+                className="theme-toggle"
+                onClick={toggleTheme}
+              >
+                {theme === "dark" ? <FaSun /> : <FaMoon />}
+              </button>
+            </div>
           </div>
         </div>
       )}
