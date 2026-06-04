@@ -1,5 +1,6 @@
 export const capacitacoes = [
   {
+    slug: "analise-desenvolvimento-sistemas",
     title: "Análise e Desenvolvimento de Sistemas",
     institution: "Formação Acadêmica",
     description:
@@ -8,7 +9,9 @@ export const capacitacoes = [
     subcategory: "Graduação",
     status: "Em andamento",
   },
+
   {
+    slug: "modelagem-banco-dados",
     title: "Modelagem de Banco de Dados",
     institution: "Alura",
     description:
@@ -17,7 +20,9 @@ export const capacitacoes = [
     subcategory: "Modelagem",
     status: "Concluído",
   },
+
   {
+    slug: "boas-praticas-csharp",
     title: "Boas Práticas em C#",
     institution: "Alura",
     description:
@@ -26,7 +31,9 @@ export const capacitacoes = [
     subcategory: "C#",
     status: "Concluído",
   },
+
   {
+    slug: "scrum-kanban",
     title: "Scrum e Kanban",
     institution: "Cursos complementares",
     description:
@@ -35,7 +42,9 @@ export const capacitacoes = [
     subcategory: "Agilidade",
     status: "Concluído",
   },
+
   {
+    slug: "power-bi-introdutorio",
     title: "Power BI Introdutório",
     institution: "Cursos complementares",
     description:
