@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/locales";
@@ -10,13 +9,15 @@ export default function HeroSection() {
   const t = translations[language];
 
   return (
-    <section className="hero-section">
+    <section className="hero-section hero-background">
+      <div className="hero-overlay" />
+
       <div className="container hero-container">
         <div className="hero-content">
-          <span className="eyebrow">{t.home.hero.badge}</span>
+          <span className="hero-eyebrow">{t.home.hero.badge}</span>
 
           <h1>
-            Geovana <span className="gradient-text">Mendes</span>
+            Geovana <span>Mendes</span>
           </h1>
 
           <p>{t.home.hero.subtitle}</p>
@@ -29,20 +30,6 @@ export default function HeroSection() {
             <Link href="/contato" className="btn btn-secondary">
               {t.home.hero.secondaryButton}
             </Link>
-          </div>
-        </div>
-
-        <div className="hero-image-wrapper">
-          <div className="hero-glow" />
-
-          <div className="hero-image-card">
-            <Image
-              src="/images/profile/silhouette.png"
-              alt={t.home.hero.imageAlt}
-              width={420}
-              height={420}
-              priority
-            />
           </div>
         </div>
       </div>

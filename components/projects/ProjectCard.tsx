@@ -16,8 +16,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
   return (
     <article className="card card-hover project-card">
-      <div className="project-image-placeholder" />
-
+      <img
+        src={project.coverImage || "/images/default-project.jpg"}
+        alt={project.title}
+        className="project-cover"
+      />
       <div className="project-header">
         <span className="project-category">{project.category}</span>
         <span className="project-subcategory">{project.subcategory}</span>

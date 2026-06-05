@@ -23,6 +23,7 @@ export const projects = {
     {
       slug: "whera",
       title: "Whera",
+      coverImage: "",
       type: "Frontend",
       category: "Frontend",
       subcategory: "Next.js",
@@ -50,6 +51,7 @@ export const projects = {
     {
       slug: "crm-sso",
       title: "CRM + Microsoft Entra ID",
+      coverImage: "",
       type: "Backend",
       category: "Backend",
       subcategory: "Authentication",
@@ -73,6 +75,7 @@ export const projects = {
     {
       slug: "rabbitmq",
       title: "RabbitMQ Integration",
+      coverImage: "",
       type: "Architecture",
       category: "Architecture",
       subcategory: "Messaging",
