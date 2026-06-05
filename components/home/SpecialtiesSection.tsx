@@ -1,37 +1,22 @@
-const specialties = [
-  {
-    title: "Arquitetura de Soluções",
-    description:
-      "Estruturação de sistemas escaláveis, organizados e preparados para evoluir com o negócio.",
-  },
-  {
-    title: "Automação",
-    description:
-      "Criação de soluções para reduzir tarefas manuais, integrar processos e aumentar produtividade.",
-  },
-  {
-    title: "Backend & APIs",
-    description:
-      "Desenvolvimento de APIs robustas, seguras e performáticas com foco em regras de negócio.",
-  },
-  {
-    title: "Dados & IA",
-    description:
-      "Uso estratégico de dados, automações inteligentes e IA para apoiar decisões e processos.",
-  },
-];
+"use client";
+
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/locales";
 
 export default function SpecialtiesSection() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <section className="section">
       <div className="container">
         <div className="section-heading">
-          <span className="eyebrow">O que eu faço</span>
-          <h2>Especialidades que conectam tecnologia e negócio</h2>
+          <span className="eyebrow">{t.home.specialties.badge}</span>
+          <h2>{t.home.specialties.title}</h2>
         </div>
 
         <div className="specialties-grid">
-          {specialties.map((item) => (
+          {t.home.specialties.items.map((item) => (
             <article key={item.title} className="card card-hover specialty-card">
               <div className="specialty-icon">✦</div>
               <h3>{item.title}</h3>

@@ -1,14 +1,19 @@
+"use client";
+
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/locales";
+
 export default function ContactPage() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <section className="section">
       <div className="container contact-page">
         <div className="section-heading">
-          <span className="eyebrow">Contato</span>
-          <h1>Vamos conversar?</h1>
-          <p>
-            Estou aberta a oportunidades, projetos, parcerias e conversas sobre
-            tecnologia, automação, backend e soluções digitais.
-          </p>
+          <span className="eyebrow">{t.contact.page.badge}</span>
+          <h1>{t.contact.page.title}</h1>
+          <p>{t.contact.page.description}</p>
         </div>
 
         <div className="contact-grid">
@@ -16,7 +21,7 @@ export default function ContactPage() {
             href="mailto:geovanarosamendes@gmail.com"
             className="card card-hover contact-card"
           >
-            <span>E-mail</span>
+            <span>{t.contact.cards.email}</span>
             <strong>geovanarosamendes@gmail.com</strong>
           </a>
 
@@ -26,7 +31,7 @@ export default function ContactPage() {
             rel="noopener noreferrer"
             className="card card-hover contact-card"
           >
-            <span>LinkedIn</span>
+            <span>{t.contact.cards.linkedin}</span>
             <strong>Geovana Mendes</strong>
           </a>
 
@@ -36,7 +41,7 @@ export default function ContactPage() {
             rel="noopener noreferrer"
             className="card card-hover contact-card"
           >
-            <span>GitHub</span>
+            <span>{t.contact.cards.github}</span>
             <strong>@geovanarosamendes</strong>
           </a>
         </div>

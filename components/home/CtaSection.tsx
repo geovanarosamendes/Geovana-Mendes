@@ -1,26 +1,30 @@
+"use client";
+
 import Link from "next/link";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/locales";
 
 export default function CtaSection() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <section className="section-sm">
       <div className="container">
         <div className="cta-card">
-          <span className="eyebrow">Vamos construir algo?</span>
+          <span className="eyebrow">{t.home.cta.badge}</span>
 
-          <h2>Tem uma ideia, projeto ou oportunidade?</h2>
+          <h2>{t.home.cta.title}</h2>
 
-          <p>
-            Estou aberta a projetos, parcerias e oportunidades onde tecnologia,
-            automação e estratégia possam gerar valor real.
-          </p>
+          <p>{t.home.cta.description}</p>
 
           <div className="cta-actions">
             <Link href="/contato" className="btn btn-primary">
-              Entrar em contato
+              {t.home.cta.primaryButton}
             </Link>
 
             <Link href="/projetos" className="btn btn-secondary">
-              Ver portfólio
+              {t.home.cta.secondaryButton}
             </Link>
           </div>
         </div>

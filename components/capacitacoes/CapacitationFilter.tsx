@@ -1,36 +1,47 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
-import { capacitacoes } from "@/data/capacitacoes";
-
-const categories = [
-  "Todos",
-  ...new Set(capacitacoes.map((item) => item.category)),
-];
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/locales";
 
 export default function CapacitationFilter() {
-  const [selectedCategory, setSelectedCategory] = useState("Todos");
-  const [selectedSubcategory, setSelectedSubcategory] = useState("Todas");
+  const { language } = useLanguage();
+  const t = translations[language];
+
+  const items = t.training.items;
+  const allCategory = t.common.filters.all;
+  const allSubcategory = t.common.filters.allFemale;
+
+  const categories = [
+    allCategory,
+    ...Array.from(new Set(items.map((item) => item.category))),
+  ];
+
+  const [selectedCategory, setSelectedCategory] = useState(allCategory);
+  const [selectedSubcategory, setSelectedSubcategory] = useState(allSubcategory);
 
   const subcategories = [
-    "Todas",
-    ...new Set(
-      capacitacoes
-        .filter((item) =>
-          selectedCategory === "Todos"
-            ? true
-            : item.category === selectedCategory
-        )
-        .map((item) => item.subcategory)
+    allSubcategory,
+    ...Array.from(
+      new Set(
+        items
+          .filter((item) =>
+            selectedCategory === allCategory
+              ? true
+              : item.category === selectedCategory
+          )
+          .map((item) => item.subcategory)
+      )
     ),
   ];
 
-  const filteredItems = capacitacoes.filter((item) => {
+  const filteredItems = items.filter((item) => {
     const matchCategory =
-      selectedCategory === "Todos" || item.category === selectedCategory;
+      selectedCategory === allCategory || item.category === selectedCategory;
 
     const matchSubcategory =
-      selectedSubcategory === "Todas" ||
+      selectedSubcategory === allSubcategory ||
       item.subcategory === selectedSubcategory;
 
     return matchCategory && matchSubcategory;
@@ -38,14 +49,14 @@ export default function CapacitationFilter() {
 
   function handleCategoryChange(category: string) {
     setSelectedCategory(category);
-    setSelectedSubcategory("Todas");
+    setSelectedSubcategory(allSubcategory);
   }
 
   return (
     <>
       <div className="select-filters-card">
         <div className="select-filter-group">
-          <label>Categoria</label>
+          <label>{t.common.filters.category}</label>
 
           <select
             value={selectedCategory}
@@ -59,9 +70,9 @@ export default function CapacitationFilter() {
           </select>
         </div>
 
-        {selectedCategory !== "Todos" && (
+        {selectedCategory !== allCategory && (
           <div className="select-filter-group">
-            <label>Subcategoria</label>
+            <label>{t.common.filters.subcategory}</label>
 
             <select
               value={selectedSubcategory}
@@ -79,7 +90,7 @@ export default function CapacitationFilter() {
 
       <div className="capacitacoes-grid">
         {filteredItems.map((item) => (
-          <article key={item.title} className="card card-hover capacitacao-card">
+          <article key={item.slug} className="card card-hover capacitacao-card">
             <div className="blog-card-header">
               <span className="project-category">{item.category}</span>
               <span className="project-subcategory">{item.subcategory}</span>
@@ -92,6 +103,12 @@ export default function CapacitationFilter() {
             <p>{item.description}</p>
 
             <span className="badge">{item.status}</span>
+
+            <div className="project-actions">
+              <Link href={`/capacitacoes/${item.slug}`}>
+                {t.common.actions.viewDetails} →
+              </Link>
+            </div>
           </article>
         ))}
       </div>

@@ -1,19 +1,16 @@
-import { capacitacoes } from "@/data/capacitacoes";
+"use client";
+
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/locales";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 
-interface CapacitacaoPageProps {
-  params: Promise<{
-    slug: string;
-  }>;
-}
+export default function CapacitacaoDetailPage() {
+  const params = useParams<{ slug: string }>();
+  const { language } = useLanguage();
+  const t = translations[language];
 
-export default async function CapacitacaoDetailPage({
-  params,
-}: CapacitacaoPageProps) {
-  const { slug } = await params;
-
-  const capacitacao = capacitacoes.find((item) => item.slug === slug);
+  const capacitacao = t.training.items.find((item) => item.slug === params.slug);
 
   if (!capacitacao) {
     notFound();
@@ -23,7 +20,7 @@ export default async function CapacitacaoDetailPage({
     <section className="section">
       <div className="container capacitacao-detail">
         <Link href="/capacitacoes" className="back-link">
-          ← Voltar para capacitações
+          ← {t.common.actions.backToTraining}
         </Link>
 
         <article className="card capacitacao-detail-card">

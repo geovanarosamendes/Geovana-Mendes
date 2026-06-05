@@ -1,29 +1,25 @@
+"use client";
+
 import CapacitationFilter from "@/components/capacitacoes/CapacitationFilter";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/locales";
 
 export default function CapacitacoesPage() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <section className="section">
       <div className="container capacitacoes-page">
         <div className="section-heading">
-          <span className="eyebrow">Capacitações</span>
-
-          <h1>Formação, cursos e evolução profissional</h1>
-
-          <p>
-            Minha jornada combina formação acadêmica em tecnologia, estudos
-            contínuos em desenvolvimento de software, banco de dados, backend,
-            dados e práticas de gestão.
-          </p>
+          <span className="eyebrow">{t.training.page.badge}</span>
+          <h1>{t.training.page.title}</h1>
+          <p>{t.training.page.description}</p>
         </div>
 
         <div className="bio-card card">
-          <h2>Formação acadêmica</h2>
-
-          <p>
-            Sou estudante de Análise e Desenvolvimento de Sistemas, com foco em
-            desenvolvimento web, backend, arquitetura de soluções, banco de
-            dados, automações e tecnologia aplicada a negócios.
-          </p>
+          <h2>{t.training.bio.title}</h2>
+          <p>{t.training.bio.description}</p>
         </div>
 
         <CapacitationFilter />

@@ -1,16 +1,20 @@
+"use client";
+
 import BlogFilter from "@/components/blog/BlogFilter";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/locales";
 
 export default function BlogPage() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <section className="section">
       <div className="container blog-page">
         <div className="section-heading">
-          <span className="eyebrow">Blog</span>
-          <h1>Artigos e aprendizados</h1>
-          <p>
-            Experiências, estudos e reflexões sobre desenvolvimento de software,
-            arquitetura, automação, IA e tecnologia aplicada a negócios.
-          </p>
+          <span className="eyebrow">{t.blog.page.badge}</span>
+          <h1>{t.blog.page.title}</h1>
+          <p>{t.blog.page.description}</p>
         </div>
 
         <BlogFilter />

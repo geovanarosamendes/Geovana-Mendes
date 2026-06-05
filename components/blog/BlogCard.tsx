@@ -1,36 +1,33 @@
+"use client";
+
 import Link from "next/link";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/locales";
+
+type BlogPost = (typeof translations)["en-US"]["blog"]["posts"][number];
 
 interface BlogCardProps {
-  slug: string;
-  title: string;
-  description: string;
-  category: string;
-  subcategory: string;
-  readTime: string;
+  post: BlogPost;
 }
 
-export default function BlogCard({
-  slug,
-  title,
-  description,
-  category,
-  subcategory,
-  readTime,
-}: BlogCardProps) {
+export default function BlogCard({ post }: BlogCardProps) {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <article className="card card-hover blog-card">
       <div className="blog-card-header">
-        <span className="project-category">{category}</span>
-        <span className="project-subcategory">{subcategory}</span>
+        <span className="project-category">{post.category}</span>
+        <span className="project-subcategory">{post.subcategory}</span>
       </div>
 
-      <h3>{title}</h3>
+      <h3>{post.title}</h3>
 
-      <p>{description}</p>
+      <p>{post.description}</p>
 
       <div className="blog-card-footer">
-        <span>{readTime}</span>
-        <Link href={`/blog/${slug}`}>Ler artigo →</Link>
+        <span>{post.readTime}</span>
+        <Link href={`/blog/${post.slug}`}>{t.blog.card.readArticle} →</Link>
       </div>
     </article>
   );

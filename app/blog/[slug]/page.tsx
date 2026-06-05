@@ -1,17 +1,16 @@
-import { posts } from "@/data/posts";
+"use client";
+
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/locales";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 
-interface BlogPostPageProps {
-  params: Promise<{
-    slug: string;
-  }>;
-}
+export default function BlogPostPage() {
+  const params = useParams<{ slug: string }>();
+  const { language } = useLanguage();
+  const t = translations[language];
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { slug } = await params;
-
-  const post = posts.find((item) => item.slug === slug);
+  const post = t.blog.posts.find((item) => item.slug === params.slug);
 
   if (!post) {
     notFound();
@@ -21,7 +20,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     <section className="section">
       <div className="container blog-detail">
         <Link href="/blog" className="back-link">
-          ← Voltar para o blog
+          ← {t.blog.detail.back}
         </Link>
 
         <article className="blog-article">
@@ -34,11 +33,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <span className="blog-read-time">{post.readTime}</span>
 
           <div className="blog-article-content card">
-            <p>
-              Este artigo ainda está em construção. Em breve, este espaço terá
-              o conteúdo completo com explicações, exemplos práticos e
-              aprendizados do projeto.
-            </p>
+            <p>{t.blog.detail.underConstruction}</p>
           </div>
         </article>
       </div>

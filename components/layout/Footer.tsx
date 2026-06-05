@@ -1,43 +1,52 @@
+"use client";
+
 import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/locales";
 
 export default function Footer() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
+  const menuItems = [
+    { label: t.common.menu.home, href: "/" },
+    { label: t.common.menu.projects, href: "/projetos" },
+    { label: t.common.menu.blog, href: "/blog" },
+    { label: t.common.menu.training, href: "/capacitacoes" },
+    { label: t.common.menu.about, href: "/sobre" },
+    { label: t.common.menu.contact, href: "/contato" },
+  ];
+
   return (
     <footer className="footer">
       <div className="container">
-
         <div className="footer-grid">
-
           <div>
             <h3 className="footer-logo">
               <span className="gradient-text">Geovana</span> Mendes
             </h3>
 
-            <p className="footer-description">
-              Desenvolvedora focada em backend, arquitetura de soluções,
-              automação de processos e tecnologia aplicada a negócios.
-            </p>
+            <p className="footer-description">{t.common.footer.description}</p>
           </div>
 
           <div>
-            <h4 className="footer-title">Navegação</h4>
+            <h4 className="footer-title">{t.common.footer.navigation}</h4>
 
             <div className="footer-links">
-              <Link href="/">Início</Link>
-              <Link href="/projetos">Projetos</Link>
-              <Link href="/blog">Blog</Link>
-              <Link href="/sobre">Sobre</Link>
-              <Link href="/contato">Contato</Link>
-              <Link href="/capacitacoes">Capacitações</Link>
+              {menuItems.map((item) => (
+                <Link key={item.href} href={item.href}>
+                  {item.label}
+                </Link>
+              ))}
             </div>
           </div>
 
           <div>
-            <h4 className="footer-title">Conecte-se</h4>
+            <h4 className="footer-title">{t.common.footer.connect}</h4>
 
             <div className="footer-socials">
-
               <a
                 href="https://github.com/geovanarosamendes"
                 target="_blank"
@@ -60,21 +69,17 @@ export default function Footer() {
                 <MdEmail size={18} />
                 E-mail
               </a>
-
             </div>
           </div>
-
         </div>
 
         <div className="footer-divider" />
 
         <div className="footer-bottom">
           <p>
-            © {new Date().getFullYear()} Geovana Mendes.
-            Todos os direitos reservados.
+            © {new Date().getFullYear()} Geovana Mendes. {t.common.footer.rights}
           </p>
         </div>
-
       </div>
     </footer>
   );

@@ -4,38 +4,33 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
-
-const menuItems = [
-  { label: "Home", href: "/" },
-  { label: "Projects", href: "/projetos" },
-  { label: "Blog", href: "/blog" },
-  { label: "Training", href: "/capacitacoes" },
-  { label: "About", href: "/sobre" },
-  { label: "Contact", href: "/contato" },
-];
+import { useLanguage, Language } from "@/contexts/LanguageContext";
+import { translations } from "@/locales";
 
 export default function Header() {
   const pathname = usePathname();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
-  const [language, setLanguage] = useState<"en-US" | "pt-BR">("en-US");
+
+  const { language, setLanguage } = useLanguage();
+  const t = translations[language];
+
+  const menuItems = [
+    { label: t.common.menu.home, href: "/" },
+    { label: t.common.menu.projects, href: "/projetos" },
+    { label: t.common.menu.blog, href: "/blog" },
+    { label: t.common.menu.training, href: "/capacitacoes" },
+    { label: t.common.menu.about, href: "/sobre" },
+    { label: t.common.menu.contact, href: "/contato" },
+  ];
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") as "dark" | "light" | null;
-    const savedLanguage = localStorage.getItem("language") as
-      | "en-US"
-      | "pt-BR"
-      | null;
-
     const initialTheme = savedTheme || "dark";
-    const initialLanguage = savedLanguage || "en-US";
 
     setTheme(initialTheme);
-    setLanguage(initialLanguage);
-
     document.documentElement.setAttribute("data-theme", initialTheme);
-    document.documentElement.lang = initialLanguage;
   }, []);
 
   function isActiveLink(href: string) {
@@ -50,10 +45,8 @@ export default function Header() {
     document.documentElement.setAttribute("data-theme", newTheme);
   }
 
-  function changeLanguage(value: "en-US" | "pt-BR") {
+  function changeLanguage(value: Language) {
     setLanguage(value);
-    localStorage.setItem("language", value);
-    document.documentElement.lang = value;
   }
 
   return (
@@ -80,9 +73,7 @@ export default function Header() {
           <select
             className="language-select"
             value={language}
-            onChange={(event) =>
-              changeLanguage(event.target.value as "en-US" | "pt-BR")
-            }
+            onChange={(event) => changeLanguage(event.target.value as Language)}
           >
             <option value="en-US">🇺🇸 EN</option>
             <option value="pt-BR">🇧🇷 PT-BR</option>
@@ -92,7 +83,7 @@ export default function Header() {
             type="button"
             className="theme-toggle"
             onClick={toggleTheme}
-            aria-label="Alterar tema"
+            aria-label={t.common.actions.changeTheme}
           >
             {theme === "dark" ? <FaSun /> : <FaMoon />}
           </button>
@@ -102,7 +93,7 @@ export default function Header() {
           type="button"
           className="mobile-menu-button"
           onClick={() => setIsMenuOpen((current) => !current)}
-          aria-label="Abrir menu"
+          aria-label={t.common.actions.openMenu}
         >
           <span />
           <span />
@@ -125,27 +116,6 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
-
-            <div className="mobile-header-actions">
-              <select
-                className="language-select"
-                value={language}
-                onChange={(event) =>
-                  changeLanguage(event.target.value as "en-US" | "pt-BR")
-                }
-              >
-                <option value="en-US">🇺🇸 EN</option>
-                <option value="pt-BR">🇧🇷 PT-BR</option>
-              </select>
-
-              <button
-                type="button"
-                className="theme-toggle"
-                onClick={toggleTheme}
-              >
-                {theme === "dark" ? <FaSun /> : <FaMoon />}
-              </button>
-            </div>
           </div>
         </div>
       )}

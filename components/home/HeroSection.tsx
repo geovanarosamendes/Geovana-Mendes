@@ -1,29 +1,33 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/locales";
 
 export default function HeroSection() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <section className="hero-section">
       <div className="container hero-container">
         <div className="hero-content">
-          <span className="eyebrow">Olá, eu sou</span>
+          <span className="eyebrow">{t.home.hero.badge}</span>
 
           <h1>
             Geovana <span className="gradient-text">Mendes</span>
           </h1>
 
-          <p>
-            Desenvolvedora focada em backend, arquitetura de soluções,
-            automação de processos e tecnologia aplicada a negócios.
-          </p>
+          <p>{t.home.hero.subtitle}</p>
 
           <div className="hero-actions">
             <Link href="/projetos" className="btn btn-primary">
-              Ver projetos
+              {t.home.hero.primaryButton}
             </Link>
 
             <Link href="/contato" className="btn btn-secondary">
-              Falar comigo
+              {t.home.hero.secondaryButton}
             </Link>
           </div>
         </div>
@@ -34,7 +38,7 @@ export default function HeroSection() {
           <div className="hero-image-card">
             <Image
               src="/images/profile/silhouette.png"
-              alt="Silhueta temporária de Geovana Mendes"
+              alt={t.home.hero.imageAlt}
               width={420}
               height={420}
               priority

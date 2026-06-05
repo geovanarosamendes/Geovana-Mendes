@@ -1,18 +1,17 @@
+"use client";
+
 import ProjectGallery from "@/components/projects/ProjectGallery";
-import { projects } from "@/data/projects";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/locales";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 
-interface ProjectPageProps {
-  params: Promise<{
-    slug: string;
-  }>;
-}
+export default function ProjectPage() {
+  const params = useParams<{ slug: string }>();
+  const { language } = useLanguage();
+  const t = translations[language];
 
-export default async function ProjectPage({ params }: ProjectPageProps) {
-  const { slug } = await params;
-
-  const project = projects.find((item) => item.slug === slug);
+  const project = t.projects.items.find((item) => item.slug === params.slug);
 
   if (!project) {
     notFound();
@@ -22,7 +21,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     <section className="section">
       <div className="container project-detail">
         <Link href="/projetos" className="back-link">
-          ← Voltar para projetos
+          ← {t.common.actions.backToProjects}
         </Link>
 
         <div className="project-detail-hero card">
@@ -37,13 +36,21 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
             <div className="project-detail-actions">
               {project.demoUrl && (
-                <Link href={project.demoUrl} target="_blank" className="btn btn-primary">
-                  Ver online
+                <Link
+                  href={project.demoUrl}
+                  target="_blank"
+                  className="btn btn-primary"
+                >
+                  {t.common.actions.viewOnline}
                 </Link>
               )}
 
-              <Link href={project.githubUrl} target="_blank" className="btn btn-secondary">
-                Ver código
+              <Link
+                href={project.githubUrl}
+                target="_blank"
+                className="btn btn-secondary"
+              >
+                {t.common.actions.viewCode}
               </Link>
             </div>
           </div>
@@ -51,27 +58,27 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
         <div className="project-detail-sections">
           <div className="card project-info-card">
-            <h2>Visão geral</h2>
+            <h2>{t.projects.detail.overview}</h2>
             <p>{project.overview}</p>
           </div>
 
           <div className="card project-info-card">
-            <h2>Problema</h2>
+            <h2>{t.projects.detail.problem}</h2>
             <p>{project.problem}</p>
           </div>
 
           <div className="card project-info-card">
-            <h2>Solução</h2>
+            <h2>{t.projects.detail.solution}</h2>
             <p>{project.solution}</p>
           </div>
 
           <div className="card project-info-card">
-            <h2>Arquitetura</h2>
+            <h2>{t.projects.detail.architecture}</h2>
             <p>{project.architecture}</p>
           </div>
 
           <div className="card project-info-card">
-            <h2>Tecnologias utilizadas</h2>
+            <h2>{t.projects.detail.technologies}</h2>
 
             <div className="project-tags">
               {project.technologies.map((tech) => (
@@ -84,7 +91,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
           {project.gallery.length > 0 && (
             <div className="project-info-card">
-              <h2>Galeria</h2>
+              <h2>{t.projects.detail.gallery}</h2>
 
               <ProjectGallery images={project.gallery} title={project.title} />
             </div>
@@ -92,18 +99,15 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
           {project.relatedPostSlug && (
             <div className="card project-info-card">
-              <h2>Estudo de caso relacionado</h2>
+              <h2>{t.projects.detail.relatedCaseStudy}</h2>
 
-              <p>
-                Leia também o artigo técnico relacionado a este projeto, com mais
-                detalhes sobre decisões, desafios e aprendizados.
-              </p>
+              <p>{t.projects.detail.relatedCaseStudyDescription}</p>
 
               <Link
                 href={`/blog/${project.relatedPostSlug}`}
                 className="btn btn-primary"
               >
-                Ler estudo de caso
+                {t.common.actions.readCaseStudy}
               </Link>
             </div>
           )}

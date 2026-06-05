@@ -461,17 +461,27 @@ p {
 
 
 @media (max-width: 900px) {
-  .nav-menu,
-  .header-actions {
+  .nav-menu {
     display: none;
+  }
+
+  .header-actions {
+    display: flex;
+    margin-left: auto;
   }
 
   .mobile-menu-button {
     display: flex;
   }
 
-  .header-container {
-    height: 72px;
+  .language-select {
+    width: 82px;
+    padding: 0 8px;
+  }
+
+  .theme-toggle {
+    width: 42px;
+    min-width: 42px;
   }
 }
 
